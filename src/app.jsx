@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import {ImageScrambler} from "./imageUtils.js";
 import {useRef} from "react";
+import logo from '/src/assets/logo.png'
 
 const Container = styled.div`
     display: flex;
@@ -10,6 +11,27 @@ const Container = styled.div`
     align-items: center;
 
     .title {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        justify-content: center;
+
+        .logo {
+            height: max(5rem, 100px);
+            width: max(5rem, 100px);
+            display: flex;
+
+            img {
+                width: 100%;
+                transition: .3s;
+                filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+        }
+
         > h1 {
             font-size: max(3rem, 50px);
             background: linear-gradient(to right, rgba(64, 91, 254, 0.66), rgba(171, 25, 254, 0.72));
@@ -109,6 +131,9 @@ export function App() {
     return (
         <Container>
             <div class="title">
+                <div className="logo">
+                    <img src={logo} alt="logo"/>
+                </div>
                 <h1>MixImage</h1>
             </div>
             <div class="content">
