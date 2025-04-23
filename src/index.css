@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: max(.6rem, 16px);
+    background-color: rgba(166, 182, 254, 0.21);
+}
+
+.shadow {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.text-hide {
+    white-space: nowrap; /* 禁止换行 */
+    overflow: hidden; /* 隐藏溢出部分 */
+    text-overflow: ellipsis; /* 显示省略号 */
+    max-width: 100%; /* 限制宽度 */
+}
+
+
