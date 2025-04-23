@@ -15,18 +15,6 @@ class XorRandom {
 export const ImageScrambler = {
     SEED: 1, // 固定种子确保混淆和还原一致
 
-    // 反转颜色
-    invertColors(imageData) {
-        const data = imageData.data;
-        for (let i = 0; i < data.length; i += 4) {
-            data[i] = 255 - data[i];     // 红色
-            data[i + 1] = 255 - data[i + 1]; // 绿色
-            data[i + 2] = 255 - data[i + 2]; // 蓝色
-            // data[i + 3] 为 alpha，保持不变
-        }
-        return imageData;
-    },
-
     // 计算块大小
     calculateBlockSize(width, height) {
         return Math.floor((width + height) / 50);
@@ -91,21 +79,20 @@ export const ImageScrambler = {
     scrambleImage(inputCanvas, outputCanvas, progressCallback) {
         const blockSize = this.calculateBlockSize(inputCanvas.width, inputCanvas.height);
         this.processImage(inputCanvas, outputCanvas, blockSize, true, progressCallback);
-
-        // 反转颜色
-        const ctx = outputCanvas.getContext('2d');
-        const imageData = ctx.getImageData(0, 0, outputCanvas.width, outputCanvas.height);
-        ctx.putImageData(this.invertColors(imageData), 0, 0);
+        invertColor(outputCanvas)
     },
 
     // 还原图像
     unscrambleImage(inputCanvas, outputCanvas, progressCallback) {
         const blockSize = this.calculateBlockSize(inputCanvas.width, inputCanvas.height);
         this.processImage(inputCanvas, outputCanvas, blockSize, false, progressCallback);
-
-        // 反转颜色
-        const ctx = outputCanvas.getContext('2d');
-        const imageData = ctx.getImageData(0, 0, outputCanvas.width, outputCanvas.height);
-        ctx.putImageData(this.invertColors(imageData), 0, 0);
+        invertColor(outputCanvas)
     }
+}
+
+function invertColor(canvas) {
+    const ctx = canvas.getContext('2d');
+    ctx.globalCompositeOperation = 'difference';
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
